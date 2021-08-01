@@ -54,9 +54,19 @@ class App extends Component {
     );
     await this.ERC20TokenInstance.methods.approve(this.receiveTokenDeployedNetwork.address, amount).send({from: this.accounts[0]});
     await this.ReceiveTokenInstance.methods.receiveToken(tokenAddress, amount).send({from: this.accounts[0]});
-    alert(" Tokens received");
+    alert(" Tokens received ");
   }
   
+  handleWithdraw = async() => {
+    if(this.ReceiveTokenInstance.methods.userWallet(this.accounts[0]).call() === 0){
+      alert("you have no ether to withdraw");
+    }    
+    else{
+      await this.ReceiveTokenInstance.methods.withdrawETH().send({from: this.accounts[0]});
+      alert("All ether withdrawn");
+    }    
+  }
+
   render() {
     return (
       <div className="App">
@@ -64,6 +74,7 @@ class App extends Component {
         Enter Token's address:< input type="text" name="tokenAddress" onChange={this.handleInputChange} />
         Enter amount (18 decimal precesion by default): <input type="text" name="amount" onChange={this.handleInputChange} />
         <button type="button" onClick={this.handleSubmit}> Transfer tokens </button>
+        <p><button type="button" onClick={this.handleWithdraw}> withdraw ether </button></p>
       </div>
     );
   }
