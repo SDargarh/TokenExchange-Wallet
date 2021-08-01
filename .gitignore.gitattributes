@@ -1,0 +1,2 @@
+#ignore mnemonic and API_key file
+./secrets.json
