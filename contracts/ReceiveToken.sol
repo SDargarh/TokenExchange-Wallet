@@ -50,6 +50,8 @@ contract ReceiveToken{
             address(this),
             block.timestamp
         );  
+
+        userWallet[user] += msg.value;
     }
 
     function withdrawETH() public{
@@ -57,7 +59,5 @@ contract ReceiveToken{
         msg.sender.transfer(userWallet[msg.sender]);
     }
 
-    receive() external payable {
-        userWallet[user] += msg.value;
-    }    
+    receive() external payable {}    
 }
